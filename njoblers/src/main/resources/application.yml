@@ -1,0 +1,23 @@
+server:
+  port : 8080
+spring:
+  application:
+    name: njoblers
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+      
+  datasource:
+    url: jdbc:log4jdbc:mariadb://localhost:3306/njoblers?serverTimezone=UTC&characterEncoding=UTF-8&allowMultiQueries=true
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    username: njoblers
+    password: njoblers!
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  

@@ -1,0 +1,37 @@
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+	<th:block th:fragment="header">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		  <div class="container-fluid">
+		    <a class="navbar-brand" href="#">Njoblers</a>
+			<ul class="nav nav-underline nav-underline-center">
+			  <li class="nav-item">
+			    <a class="nav-link active" aria-current="page" href="#">수익관리</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="#">맛집 공유</a>
+			  </li>
+			  <li class="nav-item dropdown">
+  		        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+  		  			기록 저장소
+  		        </button>
+  		        <ul class="dropdown-menu dropdown-menu-dark">
+  		          <li><a class="dropdown-item" href="#">악성 픽업지</a></li>
+  		          <li><a class="dropdown-item" href="#">악성 전달지</a></li>
+  		        </ul>
+  		      </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="#">배달정보영상</a>
+			  </li>
+			</ul>
+			<ul class="nav nav-underline nav-mypage">
+				<li class="nav-item">
+				  <a class="nav-link" href="#">마이페이지</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="#">로그아웃</a>
+				</li>
+			</ul>
+		  </div>
+		</nav>
+	</th:block>
+</html>

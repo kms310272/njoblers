@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kingdom.njoblers.admin.member.repository.AdminMemberMapper">
+
+    <select id="findByEmailAndPassword" parameterType="hashmap" resultType="map">
+        SELECT 
+        	* 
+    	FROM 
+    		member
+        WHERE 
+        	email = #{email} 
+    	AND password = #{password}
+    </select>
+    
+    
+    <select id="countByEmail" parameterType="hashmap" resultType="int">
+    	SELECT 
+    		COUNT(*) 
+		FROM 
+			member 
+		WHERE 
+			email = #{email}
+    </select>
+    
+     <insert id="insertMember" parameterType="hashmap">
+		INSERT INTO 
+			member(
+				email, 
+				pw, 
+				user_name, 
+				email_verified, 
+				status_code, 
+				member_type, 
+				reg_date, 
+				reg_id, 
+				upd_date, 
+				upd_id
+			)
+			VALUES(
+				#{email}, 
+				#{pw}, 
+				#{user_name}, 
+				'N', 
+				'1', 
+				'A', 
+				NOW(3), 
+				NULL, 
+				NULL, 
+				NULL
+			);
+	</insert>
+    
+</mapper>
