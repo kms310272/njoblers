@@ -3,7 +3,10 @@ package kingdom.njoblers.user.login.controller;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,5 +63,12 @@ public class UserLoginController {
 	        model.addAttribute("error", "이메일 또는 비밀번호가 올바르지 않습니다.");
 	        return "user/login/login";
 	    }
+	    
     }
+	
+	@PostMapping("/CheckMail")
+	public String SendMail(HttpServletRequest request, @RequestBody Map param, Model model) {
+		 String Authkey = memberService.sendEmail(param);
+		 return "코드 발급" + Authkey;
+	}
 }

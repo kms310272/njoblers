@@ -9,9 +9,25 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: cndd.help@gmail.com
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+    auth-code-expiration-millis: 1800000
       
   datasource:
-    url: jdbc:log4jdbc:mariadb://localhost:3306/njoblers?serverTimezone=UTC&characterEncoding=UTF-8&allowMultiQueries=true
+    url: jdbc:log4jdbc:mariadb://localhost:3306/njoblers?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowMultiQueries=true
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: njoblers
     password: njoblers!
