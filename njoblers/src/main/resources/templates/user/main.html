@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{user/layout/base}">
+	<head>
+		<script src="/js/weatherDesc.js"></script>
+		<script>
+	      $(document).ready(function(){
+			
+	          var apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
+	          var apiKey = '2388ffc83a98f44d96a02f1a4fc9babd';
+	          
+			  function getWeatherInfo(latitude, longitude) {
+	              // API 요청 URL 생성
+	              var requestUrl = apiUrl + '?lat=' + latitude + '&lon=' + longitude +'&lang=kr&appid=' + apiKey + '&units=metric';
+	  
+	              // openweathermap API 호출
+	              $.getJSON(requestUrl, function(data) {
+	                  var temperature = data.main.temp.toFixed(0) + " °C";
+	                  var weatherCode = data.weather[0].id;
+	                  var weatherIcon = data.weather[0].icon;
+	                  var weatherIconAdrs = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+	                  var koreanWeatherDesc = getKoreanWeatherDescription(weatherCode);
+	  
+	                  // 현재 위치 정보 가져오기
+	                  getAddress(latitude, longitude, function(address) {
+	                      $('.temperature').text(temperature);
+	                      $('.place').text(address);
+	                      $('.description_icon').attr('src', weatherIconAdrs);
+	                      $('.description').text(koreanWeatherDesc);
+	                  });
+	              });
+	          }
+			  
+			   // Geolocation API를 사용하여 현재 위치를 가져옴
+			   navigator.geolocation.getCurrentPosition(function(position) {
+		           var latitude = position.coords.latitude;
+		           var longitude = position.coords.longitude;
+		   
+		           // 현재 위치의 날씨 정보 가져오기
+		           getWeatherInfo(latitude, longitude);
+		       });
+			   
+			   function getKoreanWeatherDescription(weatherCode) {
+			     var weatherDescObj = weatherDescKo.find(item => Object.keys(item)[0] == weatherCode);
+			     return weatherDescObj ? Object.values(weatherDescObj)[0] : '알 수 없음';
+			   }
+			   
+			   //카카오 맵 이용해서 현재 위치 한글로 가져오기
+			   function getAddress(latitude, longitude, callback) {
+	               var apiUrl = 'https://dapi.kakao.com/v2/local/geo/coord2address.json';
+	               var apiKey = '';
+	   
+	               $.ajax({
+	                   url: apiUrl,
+	                   type: 'GET',
+	                   data: {
+	                       x: longitude,
+	                       y: latitude
+	                   },
+	                   beforeSend: function(xhr) {
+	                       xhr.setRequestHeader('Authorization', 'KakaoAK ' + apiKey);
+	                   },
+	                   success: function(response) {
+	                       var address = response.documents[0].address.address_name;
+	                       callback(address);
+	                   },
+	                   error: function(xhr, status, error) {
+	                       console.error('Failed to get address:', error);
+	                       callback('주소를 가져올 수 없음');
+	                   }
+	               });
+	           }
+			 
+	      });
+	  </script>
+	</head>
+	<body>
+		<th:block layout:fragment="content">
+			
+		</th:block>
+	</body>
+</html>
